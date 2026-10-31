@@ -322,7 +322,6 @@ export default function App() {
           <>
             {activeTab === 'dashboard' && (
               <FacultyMarkingView
-                faculty={faculty.find((f) => f.id === currentUser.userId)!}
                 courses={courses.filter((c) => c.facultyId === currentUser.userId)}
                 students={students}
                 onSaveSession={(newSession, newRecords) => {
@@ -382,7 +381,6 @@ export default function App() {
             {activeTab === 'dashboard' && (
               <AdminDashboard
                 config={config}
-                departments={departments}
                 studentsCount={students.length}
                 facultyCount={faculty.length}
                 coursesCount={courses.length}
@@ -853,12 +851,10 @@ function LoginPortal({
 // ==========================================
 
 function FacultyMarkingView({
-  faculty,
   courses,
   students,
   onSaveSession
 }: {
-  faculty: Faculty;
   courses: Course[];
   students: Student[];
   onSaveSession: (session: Session, records: AttendanceRecord[]) => void;
@@ -1948,7 +1944,6 @@ function StudentLeaveSubmission({
 
 function AdminDashboard({
   config,
-  departments,
   studentsCount,
   facultyCount,
   coursesCount,
@@ -1956,7 +1951,6 @@ function AdminDashboard({
   onUpdateThreshold
 }: {
   config: SystemConfig;
-  departments: Department[];
   studentsCount: number;
   facultyCount: number;
   coursesCount: number;
@@ -2348,7 +2342,7 @@ function AdminCourseManager({
 }) {
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
-  const [deptCode, setDeptCode] = useState(departments[0]?.code || 'ISE');
+  const deptCode = departments[0]?.code || 'ISE';
   const [semester, setSemester] = useState(5);
   const [facultyId, setFacultyId] = useState(faculty[0]?.id || '');
 
